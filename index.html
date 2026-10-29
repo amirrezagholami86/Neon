@@ -5,424 +5,406 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="version" content="10.0.0">
 <meta name="author" content="امیررضا غلامی">
-<meta name="theme-color" content="#0a0a1a">
-<title>۲۰۴۸ نئون — نسخه ۱۰.۰.۰</title>
+<meta name="theme-color" content="#e0f2fe">
+<title>۲۰۴۸ آرام — نسخه ۱۰.۰.۰</title>
 <style>
   :root {
-    --bg1: #050510;
-    --bg2: #0a0a2a;
-    --neon-cyan: #22d3ee;
-    --neon-pink: #f472b6;
-    --neon-purple: #a78bfa;
-    --neon-gold: #fbbf24;
-    --neon-green: #22c55e;
-    --text: #f8fafc;
-    --panel: rgba(255,255,255,0.06);
-    --board-bg: rgba(10,10,42,0.8);
+    --bg1: #e0f2fe;
+    --bg2: #f0f9ff;
+    --bg3: #fef3c7;
+    --text: #1e3a5f;
+    --text-soft: #64748b;
+    --tile-empty: rgba(255,255,255,0.5);
+    --panel: rgba(255,255,255,0.7);
+    --shadow: 0 8px 32px rgba(30,58,95,0.1);
   }
   
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   
   body {
-    font-family: Tahoma, sans-serif;
-    background: 
-      radial-gradient(circle at 20% 20%, rgba(168,85,247,0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(34,211,238,0.15) 0%, transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(244,114,182,0.1) 0%, transparent 60%),
-      linear-gradient(135deg, var(--bg1), var(--bg2));
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 40%, var(--bg3) 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
+    padding: 16px;
     color: var(--text);
     overflow: hidden;
     user-select: none;
     -webkit-user-select: none;
   }
   
-  body::before {
+  /* حباب‌های شناور پس‌زمینه */
+  body::before, body::after {
     content: '';
     position: fixed;
-    inset: 0;
-    background-image: 
-      radial-gradient(1px 1px at 10% 20%, white, transparent),
-      radial-gradient(1px 1px at 30% 60%, white, transparent),
-      radial-gradient(1px 1px at 50% 10%, white, transparent),
-      radial-gradient(1px 1px at 70% 40%, white, transparent),
-      radial-gradient(1px 1px at 90% 70%, white, transparent),
-      radial-gradient(2px 2px at 15% 85%, #22d3ee, transparent),
-      radial-gradient(2px 2px at 85% 15%, #f472b6, transparent),
-      radial-gradient(2px 2px at 60% 90%, #a78bfa, transparent);
-    background-size: 100% 100%;
-    opacity: 0.5;
+    border-radius: 50%;
     pointer-events: none;
     z-index: 0;
-    animation: twinkle 6s ease-in-out infinite;
+    filter: blur(60px);
+    opacity: 0.5;
+  }
+  body::before {
+    width: 300px; height: 300px;
+    background: #a5f3fc;
+    top: -100px; left: -100px;
+    animation: float1 12s ease-in-out infinite;
+  }
+  body::after {
+    width: 400px; height: 400px;
+    background: #fde68a;
+    bottom: -150px; right: -150px;
+    animation: float2 15s ease-in-out infinite;
   }
   
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
+  @keyframes float1 {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(60px, 40px); }
+  }
+  @keyframes float2 {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(-80px, -50px); }
   }
   
   .container {
     width: 100%;
-    max-width: 440px;
+    max-width: 420px;
     position: relative;
     z-index: 1;
   }
   
+  /* هدر ساده و تمیز */
   .header {
     text-align: center;
-    margin-bottom: 10px;
-    position: relative;
+    margin-bottom: 16px;
   }
-  
-  .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  
-  .version-badge {
-    background: linear-gradient(135deg, rgba(251,191,36,0.3), rgba(245,158,11,0.3));
-    border: 1px solid rgba(251,191,36,0.6);
-    color: var(--neon-gold);
-    font-size: 10px;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    box-shadow: 0 0 15px rgba(251,191,36,0.3);
-  }
-  
-  .icon-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: none;
-    background: var(--panel);
-    backdrop-filter: blur(10px);
-    color: var(--text);
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s;
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-  
-  .icon-btn:active { transform: scale(0.9); }
-  
-  .header-btns { display: flex; gap: 6px; }
   
   h1 {
-    font-size: 28px;
-    margin-bottom: 2px;
-    font-weight: 900;
-    text-shadow: 0 0 20px rgba(34,211,238,0.6);
-    background: linear-gradient(90deg, #22d3ee, #a78bfa, #f472b6, #fbbf24);
-    background-size: 300% 100%;
+    font-size: 42px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  
+  h1 b {
+    font-weight: 800;
+    background: linear-gradient(135deg, #0ea5e9, #f59e0b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: shimmer 3s linear infinite;
-  }
-  
-  @keyframes shimmer {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 300% 50%; }
   }
   
   .subtitle {
-    font-size: 10px;
-    opacity: 0.7;
-    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text-soft);
+    letter-spacing: 2px;
+    text-transform: uppercase;
   }
   
-  .subtitle .author {
-    color: var(--neon-gold);
-    font-weight: bold;
-  }
-  
+  /* آمار به سبک کارت‌های شیشه‌ای */
   .stats {
     display: flex;
-    gap: 6px;
-    margin-bottom: 10px;
+    gap: 10px;
+    margin-bottom: 16px;
+    justify-content: center;
   }
   
   .stat {
     background: var(--panel);
-    backdrop-filter: blur(10px);
-    padding: 8px 4px;
-    border-radius: 10px;
-    font-size: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
-    flex: 1;
-    border: 1px solid rgba(255,255,255,0.05);
-  }
-  
-  .stat b { 
-    font-size: 16px;
-    font-weight: 900;
-  }
-  
-  .stat.score b { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); }
-  .stat.best b { color: var(--neon-gold); text-shadow: 0 0 8px var(--neon-gold); }
-  .stat.moves b { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink); }
-  
-  .board-wrap {
-    position: relative;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 
-      0 0 30px rgba(34,211,238,0.3),
-      0 0 60px rgba(168,85,247,0.2),
-      inset 0 0 30px rgba(0,0,0,0.5);
-    border: 2px solid rgba(34,211,238,0.4);
-    background: var(--board-bg);
-    padding: 8px;
+    padding: 10px 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255,255,255,0.6);
+    flex: 1;
+    max-width: 120px;
+  }
+  
+  .stat-label {
+    font-size: 10px;
+    color: var(--text-soft);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  
+  .stat-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  
+  /* تخته بازی - شیشه‌ای */
+  .board-wrap {
+    background: var(--panel);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 28px;
+    padding: 14px;
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.7);
+    position: relative;
     aspect-ratio: 1;
   }
   
   .board {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    gap: 10px;
     width: 100%;
     height: 100%;
     position: relative;
   }
   
+  /* سلول‌های خالی */
+  .empty-cell {
+    background: var(--tile-empty);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+  
+  /* کاشی‌ها */
   .tile {
-    background: rgba(255,255,255,0.04);
-    border-radius: 10px;
+    position: absolute;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 900;
-    font-size: 28px;
-    position: absolute;
-    transition: transform 0.12s ease-out;
+    font-weight: 700;
+    transition: transform 0.15s ease-out;
     will-change: transform;
-    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 4px 12px rgba(30,58,95,0.08);
   }
   
-  /* رنگ کاشی‌ها */
-  .tile[data-val="2"]    { background: linear-gradient(135deg, #1e3a8a, #1e40af); color: #93c5fd; box-shadow: 0 0 15px rgba(59,130,246,0.4); }
-  .tile[data-val="4"]    { background: linear-gradient(135deg, #1e40af, #2563eb); color: #bfdbfe; box-shadow: 0 0 15px rgba(59,130,246,0.5); }
-  .tile[data-val="8"]    { background: linear-gradient(135deg, #6d28d9, #7c3aed); color: #ddd6fe; box-shadow: 0 0 15px rgba(139,92,246,0.5); }
-  .tile[data-val="16"]   { background: linear-gradient(135deg, #7c3aed, #9333ea); color: #e9d5ff; box-shadow: 0 0 15px rgba(168,85,247,0.6); }
-  .tile[data-val="32"]   { background: linear-gradient(135deg, #be185d, #db2777); color: #fbcfe8; box-shadow: 0 0 15px rgba(236,72,153,0.6); }
-  .tile[data-val="64"]   { background: linear-gradient(135deg, #db2777, #ec4899); color: #fce7f3; box-shadow: 0 0 15px rgba(236,72,153,0.7); }
-  .tile[data-val="128"]  { background: linear-gradient(135deg, #b45309, #d97706); color: #fef3c7; box-shadow: 0 0 20px rgba(245,158,11,0.6); font-size: 24px; }
-  .tile[data-val="256"]  { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fffbeb; box-shadow: 0 0 20px rgba(245,158,11,0.7); font-size: 24px; }
-  .tile[data-val="512"]  { background: linear-gradient(135deg, #ca8a04, #eab308); color: #fefce8; box-shadow: 0 0 25px rgba(234,179,8,0.8); font-size: 22px; }
-  .tile[data-val="1024"] { background: linear-gradient(135deg, #16a34a, #22c55e); color: #dcfce7; box-shadow: 0 0 30px rgba(34,197,94,0.9); font-size: 20px; }
-  .tile[data-val="2048"] { background: linear-gradient(135deg, #fbbf24, #f59e0b, #f472b6); color: #fff; box-shadow: 0 0 40px rgba(251,191,36,1); font-size: 20px; animation: pulse 0.8s infinite; }
-  .tile[data-val="4096"] { background: linear-gradient(135deg, #22d3ee, #06b6d4, #a78bfa); color: #fff; box-shadow: 0 0 40px rgba(34,211,238,1); font-size: 18px; animation: pulse 0.8s infinite; }
-  
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
+  /* رنگ‌های کاشی - پاستلی */
+  .tile[data-val="2"]    { background: #ffffff; color: #475569; }
+  .tile[data-val="4"]    { background: #fef3c7; color: #92400e; }
+  .tile[data-val="8"]    { background: #fed7aa; color: #9a3412; }
+  .tile[data-val="16"]   { background: #fecaca; color: #991b1b; }
+  .tile[data-val="32"]   { background: #fbcfe8; color: #9d174d; }
+  .tile[data-val="64"]   { background: #e9d5ff; color: #6b21a8; }
+  .tile[data-val="128"]  { background: #c7d2fe; color: #3730a3; }
+  .tile[data-val="256"]  { background: #bae6fd; color: #075985; }
+  .tile[data-val="512"]  { background: #a5f3fc; color: #155e75; }
+  .tile[data-val="1024"] { background: #86efac; color: #166534; }
+  .tile[data-val="2048"] { 
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(245,158,11,0.4);
+  }
+  .tile[data-val="4096"] { 
+    background: linear-gradient(135deg, #22d3ee, #0ea5e9);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(14,165,233,0.4);
   }
   
   .tile-appear {
-    animation: appear 0.2s ease-out;
+    animation: appear 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   
   @keyframes appear {
-    from { transform: scale(0); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from { transform: scale(0) rotate(-10deg); opacity: 0; }
+    to { transform: scale(1) rotate(0deg); opacity: 1; }
   }
   
-  .tile-merge {
-    animation: merge 0.2s ease-out;
-  }
-  
-  @keyframes merge {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
-  }
-  
-  /* صفحه شروع */
-  .start-overlay, .gameover-overlay, .settings-overlay, .about-overlay {
+  /* صفحه‌های overlay */
+  .overlay {
     position: absolute;
     inset: 0;
-    background: rgba(5,5,15,0.92);
-    backdrop-filter: blur(8px);
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 10;
-    padding: 20px;
+    padding: 24px;
     text-align: center;
-    border-radius: 16px;
-    transition: opacity 0.3s;
+    border-radius: 28px;
+    transition: opacity 0.4s;
   }
   
-  .start-overlay.hidden, .gameover-overlay.hidden { display: none; }
+  .overlay.hidden { display: none; }
   
-  .start-overlay h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: var(--neon-cyan);
-    text-shadow: 0 0 20px var(--neon-cyan);
-    animation: pulse 1.5s infinite;
+  .overlay h2 {
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 12px;
+    color: var(--text);
   }
   
-  .start-overlay p {
+  .overlay h2 b {
+    font-weight: 800;
+    background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .overlay p {
     font-size: 13px;
-    opacity: 0.8;
-    margin-bottom: 20px;
-    line-height: 1.8;
+    color: var(--text-soft);
+    margin-bottom: 24px;
+    line-height: 1.9;
   }
   
+  /* دکمه‌ها - مینیمال */
   .btn {
-    padding: 14px 32px;
+    padding: 14px 40px;
     border: none;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: bold;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 700;
     font-family: inherit;
     cursor: pointer;
-    background: linear-gradient(135deg, #22d3ee, #06b6d4);
-    color: #0f172a;
-    box-shadow: 0 0 25px rgba(34,211,238,0.6);
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(14,165,233,0.3);
     transition: 0.2s;
-    text-shadow: 0 1px 2px rgba(255,255,255,0.3);
+    letter-spacing: 0.5px;
   }
   
-  .btn:active { transform: scale(0.95); }
+  .btn:active { transform: scale(0.96); }
   
-  .btn-gold {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    box-shadow: 0 0 25px rgba(251,191,36,0.6);
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-soft);
+    box-shadow: none;
+    border: 1px solid rgba(100,116,139,0.3);
+    margin-top: 8px;
+    padding: 10px 24px;
+    font-size: 13px;
   }
   
-  .gameover-overlay h2 {
-    font-size: 28px;
-    margin-bottom: 15px;
-    color: var(--neon-pink);
-    text-shadow: 0 0 20px var(--neon-pink);
-  }
-  
-  .gameover-stats {
-    background: rgba(255,255,255,0.05);
-    border-radius: 12px;
-    padding: 15px 20px;
-    margin-bottom: 20px;
+  /* آمار نهایی */
+  .final-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
     width: 100%;
     max-width: 280px;
+    margin-bottom: 24px;
   }
   
-  .gameover-stats p {
-    font-size: 14px;
-    margin: 6px 0;
-    display: flex;
-    justify-content: space-between;
+  .final-stat {
+    background: rgba(255,255,255,0.7);
+    border-radius: 14px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.8);
   }
   
-  .gameover-stats b { color: var(--neon-cyan); }
+  .final-stat .label {
+    font-size: 10px;
+    color: var(--text-soft);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  
+  .final-stat .value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
   
   .new-record {
     background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    color: #111;
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    animation: pulse 1s infinite;
-    box-shadow: 0 0 25px rgba(251,191,36,0.8);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 20px rgba(245,158,11,0.4);
+    letter-spacing: 0.5px;
   }
   
-  /* کنترل‌های لمسی */
+  /* کنترل‌های لمسی - مینیمال */
   .controls {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    margin-top: 10px;
-    max-width: 200px;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    justify-content: center;
   }
   
   .ctrl-btn {
-    aspect-ratio: 1;
+    width: 52px;
+    height: 52px;
     border: none;
-    border-radius: 12px;
+    border-radius: 16px;
     background: var(--panel);
-    backdrop-filter: blur(10px);
-    color: var(--neon-cyan);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--text);
     font-size: 20px;
     cursor: pointer;
-    border: 1px solid rgba(34,211,238,0.3);
-    box-shadow: 0 0 10px rgba(34,211,238,0.2);
+    border: 1px solid rgba(255,255,255,0.7);
+    box-shadow: var(--shadow);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: 0.1s;
+    transition: 0.15s;
   }
   
   .ctrl-btn:active {
-    background: rgba(34,211,238,0.2);
-    transform: scale(0.9);
-    box-shadow: 0 0 20px rgba(34,211,238,0.5);
+    transform: scale(0.92);
+    background: rgba(255,255,255,0.9);
   }
-  
-  .ctrl-btn.empty { visibility: hidden; }
   
   .ctrl-btn.reset {
-    background: linear-gradient(135deg, rgba(239,68,68,0.3), rgba(220,38,38,0.3));
-    color: #fca5a5;
-    border-color: rgba(239,68,68,0.5);
-    font-size: 14px;
+    background: linear-gradient(135deg, #fecaca, #fca5a5);
+    color: #991b1b;
+    font-size: 18px;
   }
   
+  /* تنظیمات و درباره - مینیمال */
   .settings-overlay, .about-overlay {
     display: none;
   }
   
-  .settings-overlay.show, .about-overlay.show {
-    display: flex;
-  }
+  .settings-overlay.show, .about-overlay.show { display: flex; }
   
   .settings-box, .about-box {
-    background: linear-gradient(135deg, #1e1b4b, #2d1b4e);
-    padding: 24px 20px;
-    border-radius: 20px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    padding: 28px 24px;
+    border-radius: 24px;
     width: 100%;
     max-width: 300px;
-    box-shadow: 0 0 40px rgba(168,85,247,0.4);
-    border: 1px solid rgba(168,85,247,0.3);
+    box-shadow: 0 20px 60px rgba(30,58,95,0.2);
+    border: 1px solid rgba(255,255,255,0.8);
+    color: var(--text);
   }
   
-  .settings-box h3, .about-box h3 { margin-bottom: 16px; font-size: 17px; }
+  .settings-box h3, .about-box h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+  }
   
   .setting-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    font-size: 13px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(100,116,139,0.1);
+    font-size: 14px;
+    color: var(--text);
   }
   
   .setting-row:last-of-type { border-bottom: none; }
   
   .toggle {
-    width: 46px;
-    height: 26px;
-    background: rgba(255,255,255,0.2);
+    width: 48px;
+    height: 28px;
+    background: rgba(100,116,139,0.2);
     border-radius: 20px;
     position: relative;
     cursor: pointer;
@@ -430,68 +412,83 @@
     flex-shrink: 0;
   }
   
-  .toggle.on { background: var(--neon-cyan); }
+  .toggle.on { background: #0ea5e9; }
   
   .toggle::after {
     content: '';
     position: absolute;
     top: 3px;
     right: 3px;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     background: #fff;
     border-radius: 50%;
     transition: 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   
   .toggle.on::after { right: 23px; }
   
   .author-credit {
-    background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.15));
+    background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(245,158,11,0.1));
     border: 1px solid rgba(251,191,36,0.3);
-    padding: 10px;
-    border-radius: 12px;
-    margin-top: 12px;
-    font-size: 12px;
+    padding: 14px;
+    border-radius: 16px;
+    margin-top: 16px;
+    text-align: center;
   }
   
   .author-credit .label {
-    opacity: 0.7;
     font-size: 10px;
+    color: var(--text-soft);
+    letter-spacing: 1px;
+    text-transform: uppercase;
     margin-bottom: 4px;
   }
   
   .author-credit .name {
-    color: var(--neon-gold);
-    font-weight: bold;
-    font-size: 14px;
-    text-shadow: 0 0 10px rgba(251,191,36,0.5);
+    color: #d97706;
+    font-weight: 800;
+    font-size: 15px;
   }
   
-  .footer {
-    text-align: center;
-    font-size: 9px;
-    opacity: 0.5;
-    margin-top: 8px;
-    letter-spacing: 0.3px;
-    line-height: 1.5;
+  /* آیکون‌های بالا */
+  .top-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
   }
   
-  .footer .author {
-    color: var(--neon-gold);
-    font-weight: bold;
+  .icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.7);
+    background: var(--panel);
+    backdrop-filter: blur(20px);
+    color: var(--text);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    box-shadow: var(--shadow);
   }
   
-  /* افکت‌های ویژه */
+  .icon-btn:active { transform: scale(0.92); }
+  
+  /* افکت امتیاز */
   .score-pop {
     position: absolute;
-    top: 30%;
+    top: 40%;
     left: 50%;
     transform: translateX(-50%) scale(0);
-    font-size: 32px;
-    font-weight: 900;
-    color: var(--neon-gold);
-    text-shadow: 0 0 30px var(--neon-gold);
+    font-size: 28px;
+    font-weight: 800;
+    color: #f59e0b;
+    text-shadow: 0 2px 8px rgba(245,158,11,0.5);
     pointer-events: none;
     z-index: 5;
     opacity: 0;
@@ -503,40 +500,69 @@
   
   @keyframes scoreAnim {
     0% { transform: translateX(-50%) translateY(0) scale(0.3); opacity: 1; }
-    50% { transform: translateX(-50%) translateY(-30px) scale(1.2); opacity: 1; }
-    100% { transform: translateX(-50%) translateY(-60px) scale(1.4); opacity: 0; }
+    50% { transform: translateX(-50%) translateY(-30px) scale(1.1); opacity: 1; }
+    100% { transform: translateX(-50%) translateY(-60px) scale(1.2); opacity: 0; }
   }
   
-  /* افکت لرزش */
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
   }
   
   .shake { animation: shake 0.3s ease; }
+  
+  .version-tag {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-soft);
+    margin-top: 16px;
+    letter-spacing: 1px;
+  }
+  
+  .version-tag b {
+    color: #0ea5e9;
+    font-weight: 700;
+  }
+  
+  .footer-author {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-soft);
+    margin-top: 6px;
+  }
+  
+  .footer-author b {
+    color: #d97706;
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
   <div class="header">
-    <div class="top-bar">
-      <span class="version-badge">👑 v10.0.0 NEON</span>
-      <div class="header-btns">
-        <button class="icon-btn" id="soundBtn" onclick="toggleSound()">🔊</button>
-        <button class="icon-btn" onclick="openAbout()">ℹ️</button>
-        <button class="icon-btn" onclick="openSettings()">⚙️</button>
-      </div>
+    <div class="top-icons">
+      <button class="icon-btn" id="soundBtn" onclick="toggleSound()">🔊</button>
+      <button class="icon-btn" onclick="openAbout()">ℹ️</button>
+      <button class="icon-btn" onclick="openSettings()">⚙️</button>
     </div>
-    <h1>۲۰۴۸ نئون</h1>
-    <div class="subtitle">🔢 ساخته شده توسط <span class="author">امیررضا غلامی</span></div>
+    <h1><b>۲۰۴۸</b> آرام</h1>
+    <div class="subtitle">آرامش در اعداد</div>
   </div>
   
   <div class="stats">
-    <div class="stat score">امتیاز <b id="score">۰</b></div>
-    <div class="stat best">رکورد <b id="best">۰</b></div>
-    <div class="stat moves">حرکت <b id="moves">۰</b></div>
+    <div class="stat">
+      <div class="stat-label">امتیاز</div>
+      <div class="stat-value" id="score">۰</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">رکورد</div>
+      <div class="stat-value" id="best">۰</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">حرکت</div>
+      <div class="stat-value" id="moves">۰</div>
+    </div>
   </div>
   
   <div class="board-wrap" id="boardWrap">
@@ -544,80 +570,78 @@
     
     <div class="score-pop" id="scorePop">+۰</div>
     
-    <div class="start-overlay" id="startOverlay">
-      <h2>🔢 ۲۰۴۸ نئون</h2>
-      <p>کاشی‌ها رو با سوایپ جابه‌جا کن<br>اعداد یکسان رو ترکیب کن<br>به ۲۰۴۸ برس!</p>
-      <button class="btn" onclick="startGame()">▶ شروع بازی</button>
+    <div class="overlay" id="startOverlay">
+      <h2>به <b>۲۰۴۸</b> خوش آمدی</h2>
+      <p>کاشی‌ها رو با سوایپ جابه‌جا کن<br>اعداد یکسان رو ترکیب کن<br>و آرام به ۲۰۴۸ برس</p>
+      <button class="btn" onclick="startGame()">شروع</button>
     </div>
     
-    <div class="gameover-overlay hidden" id="gameoverOverlay">
-      <h2>💀 بازی تموم شد</h2>
+    <div class="overlay hidden" id="gameoverOverlay">
+      <h2>پایان <b>بازی</b></h2>
       <div id="newRecordBadge"></div>
-      <div class="gameover-stats">
-        <p><span>امتیاز:</span> <b id="finalScore">۰</b></p>
-        <p><span>رکورد:</span> <b id="finalBest">۰</b></p>
-        <p><span>بیشترین کاشی:</span> <b id="finalMaxTile">۲</b></p>
-        <p><span>تعداد حرکت:</span> <b id="finalMoves">۰</b></p>
+      <div class="final-stats">
+        <div class="final-stat">
+          <div class="label">امتیاز</div>
+          <div class="value" id="finalScore">۰</div>
+        </div>
+        <div class="final-stat">
+          <div class="label">رکورد</div>
+          <div class="value" id="finalBest">۰</div>
+        </div>
+        <div class="final-stat">
+          <div class="label">بزرگترین کاشی</div>
+          <div class="value" id="finalMaxTile">۲</div>
+        </div>
+        <div class="final-stat">
+          <div class="label">حرکت</div>
+          <div class="value" id="finalMoves">۰</div>
+        </div>
       </div>
-      <button class="btn btn-gold" onclick="startGame()">🔄 دوباره</button>
+      <button class="btn" onclick="startGame()">دوباره</button>
     </div>
     
-    <div class="settings-overlay" id="settingsOverlay">
+    <div class="overlay settings-overlay" id="settingsOverlay">
       <div class="settings-box">
-        <h3>⚙️ تنظیمات</h3>
+        <h3>تنظیمات</h3>
         <div class="setting-row">
-          <span>🔊 صدای بازی</span>
+          <span>صدا</span>
           <div class="toggle on" id="soundToggle" onclick="toggleSound()"></div>
         </div>
         <div class="setting-row">
-          <span>📳 لرزش</span>
+          <span>لرزش</span>
           <div class="toggle on" id="vibeToggle" onclick="toggleVibe()"></div>
         </div>
-        <div class="setting-row">
-          <span>🌀 افکت نئون</span>
-          <div class="toggle on" id="neonToggle" onclick="toggleNeon()"></div>
-        </div>
-        <button class="btn" style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;margin-top:16px;padding:10px 20px;font-size:14px;" onclick="closeSettings()">بستن</button>
+        <button class="btn btn-ghost" onclick="closeSettings()">بستن</button>
       </div>
     </div>
     
-    <div class="about-overlay" id="aboutOverlay">
+    <div class="overlay about-overlay" id="aboutOverlay">
       <div class="about-box">
-        <h3>ℹ️ درباره ۲۰۴۸ نئون</h3>
-        <p style="font-size:12px;line-height:1.8;opacity:0.9;margin-bottom:12px;">
-          🔢 بازی کلاسیک ۲۰۴۸<br>
-          ✨ گرافیک نئونی خفن<br>
-          🏆 سیستم رکورد و آمار<br>
-          🎯 تا کاشی ۴۰۹۶ برو!
+        <h3>درباره بازی</h3>
+        <p style="font-size:13px;line-height:1.9;color:#64748b;margin-bottom:20px;text-align:center;">
+          یه بازی آروم و مینیمال<br>
+          برای وقتی که می‌خوای ذهنت<br>
+          کمی استراحت کنه
         </p>
         <div class="author-credit">
-          <div class="label">👨‍💻 توسعه‌دهنده</div>
+          <div class="label">ساخته شده توسط</div>
           <div class="name">امیررضا غلامی</div>
         </div>
-        <p style="font-size:10px;opacity:0.6;margin-top:12px;">
-          نسخه <b style="color:#fbbf24;">10.0.0 (Neon Edition)</b>
-        </p>
-        <button class="btn" style="margin-top:12px;padding:10px 20px;font-size:14px;" onclick="closeAbout()">بستن</button>
+        <button class="btn btn-ghost" onclick="closeAbout()">بستن</button>
       </div>
     </div>
   </div>
   
   <div class="controls">
-    <div class="ctrl-btn empty"></div>
-    <button class="ctrl-btn" onclick="move('up')">▲</button>
-    <div class="ctrl-btn empty"></div>
     <button class="ctrl-btn" onclick="move('left')">◀</button>
-    <button class="ctrl-btn reset" onclick="if(confirm('مطمئنی می‌خوای بازی رو ریست کنی؟')) startGame()">🔄</button>
+    <button class="ctrl-btn reset" onclick="if(confirm('بازی ریست بشه؟')) startGame()">↺</button>
     <button class="ctrl-btn" onclick="move('right')">▶</button>
-    <div class="ctrl-btn empty"></div>
+    <button class="ctrl-btn" onclick="move('up')">▲</button>
     <button class="ctrl-btn" onclick="move('down')">▼</button>
-    <div class="ctrl-btn empty"></div>
   </div>
   
-  <div class="footer">
-    ۲۰۴۸ نئون <b>v10.0.0</b> — Neon Edition<br>
-    ساخته شده با ❤️ توسط <span class="author">امیررضا غلامی</span>
-  </div>
+  <div class="version-tag">نسخه <b>10.0.0</b></div>
+  <div class="footer-author">ساخته شده با ❤️ توسط <b>امیررضا غلامی</b></div>
 </div>
 
 <script>
@@ -625,26 +649,20 @@
 const APP_VERSION = '10.0.0';
 const APP_BUILD = 1000;
 const APP_AUTHOR = 'امیررضا غلامی';
-console.log(`🔢 ۲۰۴۸ نئون v${APP_VERSION} (build ${APP_BUILD})`);
+console.log(`🔢 ۲۰۴۸ آرام v${APP_VERSION} (build ${APP_BUILD})`);
 console.log(`👨‍💻 ساخته شده توسط: ${APP_AUTHOR}`);
-console.log('👑 Neon Edition — نسخه نئون');
 
 // ===== تنظیمات =====
 let settings = {
   sound: true,
   vibe: true,
-  neon: true,
 };
 
 // ===== Audio =====
 let audioCtx = null;
-
 function initAudio() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 }
-
 function playTone(freq, duration = 0.1, type = 'sine', volume = 0.15) {
   if (!settings.sound) return;
   initAudio();
@@ -659,38 +677,27 @@ function playTone(freq, duration = 0.1, type = 'sine', volume = 0.15) {
   osc.start();
   osc.stop(audioCtx.currentTime + duration);
 }
-
-function playMoveSound() { playTone(400, 0.05, 'sine', 0.1); }
+function playMoveSound() { playTone(500, 0.05, 'sine', 0.08); }
 function playMergeSound(val) {
   const base = 500 + Math.log2(val) * 80;
-  playTone(base, 0.1, 'sine', 0.2);
-  setTimeout(() => playTone(base * 1.3, 0.1, 'sine', 0.15), 50);
+  playTone(base, 0.1, 'sine', 0.15);
+  setTimeout(() => playTone(base * 1.3, 0.1, 'sine', 0.12), 50);
 }
-function playWinSound() {
-  [523, 659, 784, 1047, 1319].forEach((f, i) => {
-    setTimeout(() => playTone(f, 0.3, 'sine', 0.22), i * 130);
-  });
-}
-function playDieSound() { playTone(200, 0.3, 'sawtooth', 0.2); setTimeout(() => playTone(150, 0.3, 'sawtooth', 0.2), 150); }
+function playDieSound() { playTone(250, 0.3, 'sine', 0.15); setTimeout(() => playTone(180, 0.3, 'sine', 0.15), 150); }
 
 function vibrate(ms = 20) {
   if (settings.vibe && navigator.vibrate) navigator.vibrate(ms);
 }
 
 // ===== ذخیره =====
-function saveSettings() {
-  localStorage.setItem('2048_neon_settings', JSON.stringify(settings));
-}
+function saveSettings() { localStorage.setItem('2048_calm_settings', JSON.stringify(settings)); }
 function loadSettings() {
-  const s = localStorage.getItem('2048_neon_settings');
+  const s = localStorage.getItem('2048_calm_settings');
   if (s) settings = { ...settings, ...JSON.parse(s) };
 }
-function getBest() { return parseInt(localStorage.getItem('2048_neon_best') || '0'); }
+function getBest() { return parseInt(localStorage.getItem('2048_calm_best') || '0'); }
 function saveBest(score) {
-  if (score > getBest()) {
-    localStorage.setItem('2048_neon_best', score);
-    return true;
-  }
+  if (score > getBest()) { localStorage.setItem('2048_calm_best', score); return true; }
   return false;
 }
 
@@ -704,26 +711,30 @@ const startOverlay = document.getElementById('startOverlay');
 const gameoverOverlay = document.getElementById('gameoverOverlay');
 const scorePop = document.getElementById('scorePop');
 
-// ===== وضعیت بازی =====
+// ===== وضعیت =====
 const SIZE = 4;
 let grid = [];
 let tiles = [];
 let score = 0;
 let moves = 0;
 let gameRunning = false;
-let won2048 = false;
 let highestTile = 2;
 
-// ===== شروع =====
 function startGame() {
   grid = Array.from({ length: SIZE }, () => Array(SIZE).fill(0));
   tiles = [];
   score = 0;
   moves = 0;
-  won2048 = false;
   highestTile = 2;
   gameRunning = true;
   boardEl.innerHTML = '';
+  
+  // سلول‌های خالی
+  for (let i = 0; i < SIZE * SIZE; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'empty-cell';
+    boardEl.appendChild(cell);
+  }
   
   addRandomTile();
   addRandomTile();
@@ -736,18 +747,15 @@ function startGame() {
 
 function addRandomTile() {
   const empty = [];
-  for (let r = 0; r < SIZE; r++) {
-    for (let c = 0; c < SIZE; c++) {
+  for (let r = 0; r < SIZE; r++)
+    for (let c = 0; c < SIZE; c++)
       if (grid[r][c] === 0) empty.push({ r, c });
-    }
-  }
   if (empty.length === 0) return;
   
   const { r, c } = empty[Math.floor(Math.random() * empty.length)];
   const value = Math.random() < 0.9 ? 2 : 4;
   grid[r][c] = value;
   
-  // tile جدید
   const tile = createTile(value, r, c, true);
   tiles.push(tile);
 }
@@ -757,13 +765,10 @@ function createTile(value, r, c, isNew = false) {
   el.className = 'tile' + (isNew ? ' tile-appear' : '');
   el.textContent = toPersian(value);
   el.dataset.val = value;
-  el.dataset.r = r;
-  el.dataset.c = c;
   boardEl.appendChild(el);
   return { el, value, r, c };
 }
 
-// ===== حرکت =====
 function move(dir) {
   if (!gameRunning) return;
   
@@ -773,30 +778,21 @@ function move(dir) {
     left: { dr: 0, dc: -1 },
     right: { dr: 0, dc: 1 },
   };
-  
   const { dr, dc } = vectors[dir];
   let moved = false;
   let totalGained = 0;
-  const mergedThisMove = new Set();
-  
-  // ترتیب پیمایش
+  const merged = Array.from({ length: SIZE }, () => Array(SIZE).fill(false));
   const rows = dr > 0 ? [3, 2, 1, 0] : [0, 1, 2, 3];
   const cols = dc > 0 ? [3, 2, 1, 0] : [0, 1, 2, 3];
-  
-  // ریست کردن سلول‌های ادغام‌شده
-  const merged = Array.from({ length: SIZE }, () => Array(SIZE).fill(false));
   
   for (const r of rows) {
     for (const c of cols) {
       if (grid[r][c] === 0) continue;
-      
       let nr = r, nc = c;
       let val = grid[r][c];
       
-      // حرکت تا جایی که ممکنه
       while (true) {
-        const tr = nr + dr;
-        const tc = nc + dc;
+        const tr = nr + dr, tc = nc + dc;
         if (tr < 0 || tr >= SIZE || tc < 0 || tc >= SIZE) break;
         
         if (grid[tr][tc] === 0) {
@@ -805,7 +801,6 @@ function move(dir) {
           nr = tr; nc = tc;
           moved = true;
         } else if (grid[tr][tc] === val && !merged[tr][tc]) {
-          // ادغام
           const newVal = val * 2;
           grid[tr][tc] = newVal;
           grid[nr][nc] = 0;
@@ -813,14 +808,8 @@ function move(dir) {
           totalGained += newVal;
           if (newVal > highestTile) highestTile = newVal;
           moved = true;
-          if (newVal === 2048 && !won2048) {
-            won2048 = true;
-            setTimeout(() => playWinSound(), 200);
-          }
           break;
-        } else {
-          break;
-        }
+        } else break;
       }
     }
   }
@@ -830,83 +819,67 @@ function move(dir) {
   moves++;
   score += totalGained;
   playMoveSound();
-  vibrate(15);
+  vibrate(12);
   
-  // افکت امتیاز
   if (totalGained > 0) {
     scorePop.textContent = `+${toPersian(totalGained)}`;
     scorePop.classList.remove('show');
     void scorePop.offsetWidth;
     scorePop.classList.add('show');
     playMergeSound(totalGained);
-    vibrate(25);
+    vibrate(20);
   }
   
-  // حذف tileهای قدیمی و ساخت مجدد
   rebuildTiles();
   addRandomTile();
   updateUI();
   
-  // بررسی باخت
-  if (!canMove()) {
-    setTimeout(gameOver, 300);
-  }
+  if (!canMove()) setTimeout(gameOver, 300);
 }
 
 function rebuildTiles() {
-  boardEl.innerHTML = '';
+  // حذف tileهای قبلی
+  document.querySelectorAll('.tile').forEach(t => t.remove());
   tiles = [];
-  for (let r = 0; r < SIZE; r++) {
-    for (let c = 0; c < SIZE; c++) {
-      if (grid[r][c] !== 0) {
-        const tile = createTile(grid[r][c], r, c, false);
-        tiles.push(tile);
-      }
-    }
-  }
+  for (let r = 0; r < SIZE; r++)
+    for (let c = 0; c < SIZE; c++)
+      if (grid[r][c] !== 0)
+        tiles.push(createTile(grid[r][c], r, c, false));
+  render();
 }
 
 function canMove() {
-  for (let r = 0; r < SIZE; r++) {
+  for (let r = 0; r < SIZE; r++)
     for (let c = 0; c < SIZE; c++) {
       if (grid[r][c] === 0) return true;
       if (c < SIZE - 1 && grid[r][c] === grid[r][c + 1]) return true;
       if (r < SIZE - 1 && grid[r][c] === grid[r + 1][c]) return true;
     }
-  }
   return false;
 }
 
 function gameOver() {
   gameRunning = false;
   playDieSound();
-  vibrate([50, 30, 50, 30, 100]);
+  vibrate([40, 30, 40, 30, 80]);
   boardWrap.classList.add('shake');
   setTimeout(() => boardWrap.classList.remove('shake'), 300);
   
   const isNewRecord = saveBest(score);
-  
   document.getElementById('finalScore').textContent = toPersian(score);
   document.getElementById('finalBest').textContent = toPersian(getBest());
   document.getElementById('finalMaxTile').textContent = toPersian(highestTile);
   document.getElementById('finalMoves').textContent = toPersian(moves);
   
   const badge = document.getElementById('newRecordBadge');
-  if (isNewRecord && score > 0) {
-    badge.innerHTML = '<div class="new-record">🏆 رکورد جدید!</div>';
-  } else {
-    badge.innerHTML = '';
-  }
+  badge.innerHTML = (isNewRecord && score > 0) ? '<div class="new-record">🏆 رکورد جدید!</div>' : '';
   
-  setTimeout(() => {
-    gameoverOverlay.classList.remove('hidden');
-  }, 500);
+  setTimeout(() => gameoverOverlay.classList.remove('hidden'), 400);
 }
 
-// ===== رسم =====
 function render() {
   const boardRect = boardEl.getBoundingClientRect();
-  const gap = 8;
+  const gap = 10;
   const cellSize = (boardRect.width - gap * (SIZE - 1)) / SIZE;
   
   for (const tile of tiles) {
@@ -915,9 +888,7 @@ function render() {
     tile.el.style.width = cellSize + 'px';
     tile.el.style.height = cellSize + 'px';
     tile.el.style.transform = `translate(${x}px, ${y}px)`;
-    tile.el.style.fontSize = (cellSize / 2.5) + 'px';
-    tile.el.textContent = toPersian(tile.value);
-    tile.el.dataset.val = tile.value;
+    tile.el.style.fontSize = (cellSize / 2.6) + 'px';
   }
 }
 
@@ -929,7 +900,6 @@ function updateUI() {
 
 // ===== کنترل لمسی =====
 let touchStartX = 0, touchStartY = 0;
-
 boardWrap.addEventListener('touchstart', (e) => {
   touchStartX = e.touches[0].clientX;
   touchStartY = e.touches[0].clientY;
@@ -939,17 +909,11 @@ boardWrap.addEventListener('touchend', (e) => {
   if (!gameRunning) return;
   const dx = e.changedTouches[0].clientX - touchStartX;
   const dy = e.changedTouches[0].clientY - touchStartY;
-  
-  if (Math.abs(dx) < 30 && Math.abs(dy) < 30) return;
-  
-  if (Math.abs(dx) > Math.abs(dy)) {
-    move(dx > 0 ? 'right' : 'left');
-  } else {
-    move(dy > 0 ? 'down' : 'up');
-  }
+  if (Math.abs(dx) < 25 && Math.abs(dy) < 25) return;
+  if (Math.abs(dx) > Math.abs(dy)) move(dx > 0 ? 'right' : 'left');
+  else move(dy > 0 ? 'down' : 'up');
 }, { passive: true });
 
-// کیبورد
 document.addEventListener('keydown', (e) => {
   if (!gameRunning) return;
   switch(e.key) {
@@ -969,36 +933,25 @@ function closeAbout() { document.getElementById('aboutOverlay').classList.remove
 function syncToggles() {
   document.getElementById('soundToggle').classList.toggle('on', settings.sound);
   document.getElementById('vibeToggle').classList.toggle('on', settings.vibe);
-  document.getElementById('neonToggle').classList.toggle('on', settings.neon);
   document.getElementById('soundBtn').textContent = settings.sound ? '🔊' : '🔇';
 }
 
 function toggleSound() {
   settings.sound = !settings.sound;
-  syncToggles();
-  saveSettings();
+  syncToggles(); saveSettings();
   if (settings.sound) playTone(600, 0.1);
 }
-
 function toggleVibe() {
   settings.vibe = !settings.vibe;
-  syncToggles();
-  saveSettings();
+  syncToggles(); saveSettings();
   if (settings.vibe) vibrate(30);
 }
 
-function toggleNeon() {
-  settings.neon = !settings.neon;
-  syncToggles();
-  saveSettings();
-}
-
-// ===== ابزار =====
 function toPersian(num) {
   return String(num).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
 }
 
-// ===== شروع اولیه =====
+// ===== شروع =====
 loadSettings();
 syncToggles();
 bestEl.textContent = toPersian(getBest());
